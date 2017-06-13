@@ -1,31 +1,45 @@
 "use strict";
-var _ = require("lodash");
 var chai = require("chai");
-var sinon = require("sinon");
-var sinonChai = require("sinon-chai");
 var expect = chai.expect;
-chai.use(sinonChai);
 
 var main = require("../lib/main.js");
 
 
-describe("测试描述", function(){
-    sinon.spy(console, 'log');
+describe('practice-3-4', () => {
 
-    it("测试用例1", function(){
+    const collectionA = [
+        'a', 'a', 'a',
+        'e', 'e', 'e', 'e', 'e', 'e', 'e',
+        'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h',
+        't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't', 't',
+        'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f', 'f',
+        'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c',
+        'g', 'g', 'g', 'g', 'g', 'g', 'g',
+        'b', 'b', 'b', 'b', 'b', 'b',
+        'd-5'
+    ];
 
-        var result = main();
-        var expect_string = '';
-        
-        expect(expect_string).to.equal(result);
-    });
 
-    it("测试用例2", function(){
+    const objectB = {value: ['a', 'd', 'e', 'f']};
 
-        main();
-        var result = _.flatten(console.log.args).join("\n");
-        var expect_string = '';
+    it('统计出A集合中相同的元素的个数，' +
+        '如果有-就把-右边的数字也计算入个数，形成C集合，' +
+        'C集合中的元素要形如{key:"a", count: 3}，' +
+        '然后选出C集合中的元素的key属性跟B对象中value属性中的元素相同的元素,' +
+        '把他们的count，满3减1，输出减过之后的新C集合', () => {
 
-        expect(expect_string).to.equal(result);
+        const result = main(collectionA, objectB);
+
+        expect(result).to.deep.equal([
+            {key: 'a', count: 2},
+            {key: 'e', count: 5},
+            {key: 'h', count: 11},
+            {key: 't', count: 20},
+            {key: 'f', count: 6},
+            {key: 'c', count: 8},
+            {key: 'g', count: 7},
+            {key: 'b', count: 6},
+            {key: 'd', count: 4}
+        ]);
     });
 });
